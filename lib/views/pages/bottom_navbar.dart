@@ -50,7 +50,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   }
   List<Widget> _buildScreens() {
     return [
-      const AuthPage(),
+      const HomePage(),
       const HomePage(),
       const AuthPage(),
       const AuthPage(),
