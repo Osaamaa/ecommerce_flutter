@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  /// TODO
+  /// TODO: Temp code till refactor to a separate class with a separate context
   Widget _buildHeaderOfList(
     BuildContext context, {
     required String title,
@@ -70,13 +70,12 @@ class HomePage extends StatelessWidget {
                     color: Colors.black,
                   )),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 child: Text(
                   "Street Clothes",
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline4!
-                      .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.headline4!.copyWith(
+                      color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               ),
             ],
@@ -86,52 +85,55 @@ class HomePage extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
-            child:Column(children: [
-              _buildHeaderOfList(
-                context,
-                title: 'Sale',
-                description: 'Super Summer Sale!!',
-              ),
-              SizedBox(
-                height: 330,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: dummyProducts
-                      .map(
-                        (e) => Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ListItemHome(product: e),
-                    ),
-                  )
-                      .toList(),
+            child: Column(
+              children: [
+                _buildHeaderOfList(
+                  context,
+                  title: 'Sale',
+                  description: 'Super Summer Sale!!',
                 ),
-              ),
-            ],),
+                SizedBox(
+                  height: 330,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: dummyProducts
+                        .map(
+                          (e) => Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ListItemHome(product: e),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
+              ],
+            ),
           ),
-
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
-            child:Column(children: [
-              _buildHeaderOfList(
-                context,
-                title: 'New',
-                description: 'Super Summer Sale!!',
-              ),
-              SizedBox(
-                height: 330,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: dummyProducts
-                      .map(
-                        (e) => Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ListItemHome(product: e),
-                    ),
-                  )
-                      .toList(),
+            child: Column(
+              children: [
+                _buildHeaderOfList(
+                  context,
+                  title: 'New',
+                  description: 'Super Summer Sale!!',
                 ),
-              ),
-            ],),
+                SizedBox(
+                  height: 330,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: dummyProducts
+                        .map(
+                          (e) => Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ListItemHome(product: e),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
