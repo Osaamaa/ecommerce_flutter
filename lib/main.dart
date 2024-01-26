@@ -27,11 +27,19 @@ class MyApp extends StatelessWidget {
             borderRadius: BorderRadius.circular(3),
             borderSide: const BorderSide(color: Colors.grey),
           ),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(3),
+            borderSide: const BorderSide(color: Colors.red),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(3),
+            borderSide: const BorderSide(color: Colors.red),
+          ),
         ),
       ),
       debugShowCheckedModeBanner: false,
       onGenerateRoute: onGenerate,
-      initialRoute: AppRoutes.loginPageRoute,
+      initialRoute: AppRoutes.bottomNavBarRoute,
     );
   }
 }
