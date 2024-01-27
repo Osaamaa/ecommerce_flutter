@@ -52,9 +52,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
     return [
       const HomePage(),
       const HomePage(),
-      const AuthPage(),
-      const AuthPage(),
-      const AuthPage(),
+      const HomePage(),
+      const HomePage(),
+      const HomePage(),
     ];
   }
   @override
