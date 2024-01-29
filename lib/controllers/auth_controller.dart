@@ -48,4 +48,11 @@ Future<void>submit()async{
     this.authFormType = authFormType ?? this.authFormType;
     notifyListeners();
   }
+  Future<void> logout() async {
+    try {
+      await auth.logOut();
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

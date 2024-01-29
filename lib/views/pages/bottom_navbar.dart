@@ -1,9 +1,8 @@
 import 'package:ecommerce/views/pages/home_page.dart';
+import 'package:ecommerce/views/pages/profile_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-
-import 'auth.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});
@@ -54,7 +53,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       const HomePage(),
       const HomePage(),
       const HomePage(),
-      const HomePage(),
+      const ProfilePage(),
     ];
   }
   @override

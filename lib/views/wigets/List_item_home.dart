@@ -5,7 +5,6 @@ class ListItemHome extends StatelessWidget {
   const ListItemHome({super.key, required this.product});
 
   final Product product;
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -81,7 +80,7 @@ class ListItemHome extends StatelessWidget {
                     ),
               ),
               TextSpan(
-                  text: ' ${product.price * (product.discountValue) / 100}\$',
+                  text: "${product.discountValue == 0 ? product.price : (product.price - (product.price * (product.discountValue! / 100)))}\$",
                   style: Theme.of(context).textTheme.titleMedium),
             ]))
           ],

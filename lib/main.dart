@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Provider<AuthBase>(
-      create: (BuildContext context) =>Auth(),
+      create: (_) =>Auth(),
       child: MaterialApp(
         title: 'ecommerce',
         theme: ThemeData(
