@@ -3,6 +3,7 @@ import 'package:ecommerce/models/product.dart';
 import 'package:ecommerce/utilites/assets.dart';
 import 'package:ecommerce/views/wigets/List_item_home.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
@@ -96,7 +97,7 @@ class HomePage extends StatelessWidget {
                   description: 'Super Summer Sale!!',
                 ),
                 SizedBox(
-                  height: 330,
+                  height: 350,
                   child: StreamBuilder<List<Product>>(
                       stream: database.salesProductsStream(),
                       builder: (context, snapshot) {
@@ -113,11 +114,10 @@ class HomePage extends StatelessWidget {
                           return ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: products.length,
-                            itemBuilder:(_, index) => Padding(
-                                    padding:  EdgeInsets.all(8.0),
-                                    child: ListItemHome(product: products[index]),
-                                  ),
-
+                            itemBuilder: (_, index) => Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ListItemHome(product: products[index]),
+                            ),
                           );
                         }
                         return const Center(
