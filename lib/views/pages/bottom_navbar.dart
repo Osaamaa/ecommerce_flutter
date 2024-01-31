@@ -12,7 +12,7 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  final _bottomNavbarcontroller=PersistentTabController();
+  final _bottomNavbarController=PersistentTabController();
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
@@ -50,9 +50,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
   List<Widget> _buildScreens() {
     return [
       const HomePage(),
-      const HomePage(),
-      const HomePage(),
-      const HomePage(),
+       Container(),
+       Container(),
+       Container(),
       const ProfilePage(),
     ];
   }
@@ -61,7 +61,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     return Scaffold(
         body: PersistentTabView(
       context,
-      controller: _bottomNavbarcontroller,
+      controller: _bottomNavbarController,
       screens: _buildScreens(),
       items: _navBarsItems(),
       confineInSafeArea: true,

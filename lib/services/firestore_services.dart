@@ -1,17 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
-class FirestoreServices {
-  FirestoreServices._();
+class FireStoreServices {
+  FireStoreServices._();
 
-  static final instance = FirestoreServices._();
+  static final instance = FireStoreServices._();
 
   final _fireStore = FirebaseFirestore.instance;
 
-  Future<void> setData({
-    required String path,
-    required Map<String, dynamic> data,
-  }) async {
+  Future<void> setData(
+      {required String path, required Map<String, dynamic> data}) async {
     final reference = _fireStore.doc(path);
     debugPrint('Request Data: $data');
     await reference.set(data);
@@ -47,10 +45,10 @@ class FirestoreServices {
       final result = snapshot.docs
           .map(
             (snapshot) => builder(
-          snapshot.data() as Map<String, dynamic>,
-          snapshot.id,
-        ),
-      )
+              snapshot.data() as Map<String, dynamic>,
+              snapshot.id,
+            ),
+          )
           .where((value) => value != null)
           .toList();
       if (sort != null) {

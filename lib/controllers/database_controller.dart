@@ -1,17 +1,24 @@
+import 'package:ecommerce/models/add_to_cart_model.dart';
 import 'package:ecommerce/utilites/api_path.dart';
-
 import '../models/product.dart';
+import '../models/user_date.dart';
 import '../services/firestore_services.dart';
 
 abstract class Database {
   Stream<List<Product>> salesProductsStream();
 
   Stream<List<Product>> newProductsStream();
+
+  Future<void> setUserData(UserData userData);
+
+  Future<void> addToCart(AddToCartModel product);
+
+  Stream<List<AddToCartModel>> myProductCart();
 }
 
 class FireStoreDatabase implements Database {
   final String uid;
-  final _service = FirestoreServices.instance;
+  final _service = FireStoreServices.instance;
 
   FireStoreDatabase(this.uid);
 
@@ -26,5 +33,22 @@ class FireStoreDatabase implements Database {
   Stream<List<Product>> newProductsStream() => _service.collectionsStream(
         path: ApiPath.products,
         builder: (data, documentId) => Product.fromMap(data!, documentId),
-  );
+      );
+
+  @override
+  Future<void> setUserData(UserData userData) async => await _service.setData(
+        path: ApiPath.user(userData.uid),
+        data: userData.toMap(),
+      );
+
+  @override
+  Future<void> addToCart(AddToCartModel product) async => _service.setData(
+        path: ApiPath.addToCart(uid, product.id),
+        data: product.toMap(),
+      );
+
+  @override
+  Stream<List<AddToCartModel>> myProductCart() => _service.collectionsStream(
+      path: ApiPath.myProductCart(uid),
+      builder: (data, documentID) => AddToCartModel.fromMap(data!, documentID));
 }

@@ -1,3 +1,4 @@
+import 'package:ecommerce/controllers/database_controller.dart';
 import 'package:ecommerce/services/auth.dart';
 import 'package:ecommerce/utilites/router.dart';
 import 'package:ecommerce/utilites/routes.dart';
@@ -26,9 +27,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'ecommerce',
         theme: ThemeData(
-          scaffoldBackgroundColor: Color(0xFFF9F9F9),
-
-
+          scaffoldBackgroundColor: const Color(0xFFF9F9F9),
           appBarTheme: const AppBarTheme(
             elevation: 0.5,
             backgroundColor: Colors.white,

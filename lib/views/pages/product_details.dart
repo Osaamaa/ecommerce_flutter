@@ -1,13 +1,20 @@
-import 'package:ecommerce/models/product.dart';
-import 'package:ecommerce/views/wigets/main_bottom.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../controllers/database_controller.dart';
+import '../../models/add_to_cart_model.dart';
+import '../../models/product.dart';
+import '../../utilites/constants.dart';
 import '../wigets/drob_down.dart';
+import '../wigets/mainDialog.dart';
+import '../wigets/main_bottom.dart';
 
 class ProductDetails extends StatefulWidget {
-  const ProductDetails({super.key, required this.product});
-
   final Product product;
+  const ProductDetails({
+    Key? key,
+    required this.product,
+  }) : super(key: key);
 
   @override
   State<ProductDetails> createState() => _ProductDetailsState();
@@ -15,135 +22,159 @@ class ProductDetails extends StatefulWidget {
 
 class _ProductDetailsState extends State<ProductDetails> {
   bool isFavorite = false;
+  late String dropdownValue;
+
+  Future<void> _addToCart(Database database) async {
+    try {
+      final addToCartProduct = AddToCartModel(
+        id: documentIdFromLocalData(),
+        title: widget.product.title,
+        price: widget.product.price,
+        productId: widget.product.id,
+        imgUrl: widget.product.imgUrl,
+        size: dropdownValue,
+      );
+      await database.addToCart(addToCartProduct);
+    } catch (e) {
+      return MainDialog(
+        context: context,
+        title: 'Error',
+        content: 'Couldn\'t adding to the cart, please try again!',
+      ).showAlertDialog();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    var dropdownValue="hello";
+    final database = Provider.of<Database>(context);
+
     return Scaffold(
-        appBar: AppBar(
-          title: Center(
-            child: Text(
-              widget.product.title,
-              style: Theme.of(context).textTheme.headline6,
+      appBar: AppBar(
+        title: Text(
+          widget.product.title,
+          style: Theme.of(context).textTheme.headline6,
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.share,
             ),
           ),
-          actions: [
-            IconButton(onPressed: () {}, icon: const Icon(Icons.share))
-          ],
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Image.network(
-                widget.product.imgUrl,
-                width: double.infinity,
-                height: size.height * .5,
-                fit: BoxFit.cover,
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Image.network(
+              widget.product.imgUrl,
+              width: double.infinity,
+              height: size.height * 0.55,
+              fit: BoxFit.cover,
+            ),
+            const SizedBox(height: 8.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 8.0,
               ),
-              SizedBox(
-                height: 16,
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: SizedBox(
-                            height: 60,
-                            child: DropDownMenuComponent(
-                              items: const ['S', 'M', 'L', 'XL', 'XXL'],
-                              hint: 'Size',
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  dropdownValue = newValue!;
-                                });
-                              },
-                            ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: SizedBox(
+                          height: 60,
+                          child: DropDownMenuComponent(
+                            items: const ['S', 'M', 'L', 'XL', 'XXL'],
+                            hint: 'Size',
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                dropdownValue = newValue!;
+                              });
+                            },
                           ),
                         ),
-                        Spacer(),
-                        InkWell(
-                          onTap: () {
+                      ),
+                      const Spacer(),
+                      // TODO: Create one component for the favorite button
+                      InkWell(
+                        onTap: () {
+                          setState(() {
                             isFavorite = !isFavorite;
-                            setState(() {});
-                          },
-                          child: SizedBox(
-                            height: 80,
-                            width: 80,
+                          });
+                        },
+                        child: SizedBox(
+                          height: 60,
+                          width: 60,
+                          child: DecoratedBox(
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: DecoratedBox(
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: isFavorite
-                                    ? const Icon(
-                                        Icons.favorite,
-                                        color: Colors.black54,
-                                        size: 30,
-                                      )
-                                    : const Icon(
-                                        Icons.favorite_border_outlined,
-                                        color: Colors.black54,
-                                        size: 30,
-                                      ),
+                              child: Icon(
+                                isFavorite
+                                    ? Icons.favorite
+                                    : Icons.favorite_border_outlined,
+                                color: isFavorite
+                                    ? Colors.redAccent
+                                    : Colors.black45,
+                                size: 30,
                               ),
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          widget.product.title,
-                          style: Theme.of(context).textTheme.headlineSmall,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 24.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        widget.product.title,
+                        style: Theme.of(context).textTheme.headline5!.copyWith(
+                          fontWeight: FontWeight.w600,
                         ),
-                        Text("\$${widget.product.price}",
-                            style: Theme.of(context).textTheme.headlineSmall),
-                      ],
+                      ),
+                      Text(
+                        '\$${widget.product.price}',
+                        style: Theme.of(context).textTheme.headline5!.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8.0),
+                  Text(
+                    widget.product.category,
+                    style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                      color: Colors.black54,
                     ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    Text(widget.product.category,
-                        style:
-                            Theme.of(context).textTheme.titleMedium!.copyWith(
-                                  color: Colors.grey.withOpacity(0.9),
-                                )),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    Text(
-                        'Short dress in soft cotton jersey with decorative buttons down the front and a wide, frill-trimmed square neckline with concealed elastication. Elasticated seam under the bust and short puff sleeves with a small frill trim.',
-                        style:
-                            Theme.of(context).textTheme.titleMedium!.copyWith(
-                                  color: Colors.grey.withOpacity(0.9),
-                                )),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    MainBottom(
-                      text: "ADD TO CART",
-                      onTap: () {},
-                      hasBorder: true,
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
-        ));
+                  ),
+                  const SizedBox(height: 16.0),
+                  Text(
+                    'This is a dummy description for this product! I think we will add it in the future! I need to add more lines, so I add these words just to have more than two lines!',
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                  const SizedBox(height: 24.0),
+                  MainBottom(
+                    text: 'Add to cart',
+                    onTap: () => _addToCart(database),
+                    // hasCircularBorder: true,
+                  ),
+                  const SizedBox(height: 32.0),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

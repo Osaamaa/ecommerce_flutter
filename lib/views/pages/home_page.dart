@@ -1,21 +1,21 @@
-import 'package:ecommerce/controllers/database_controller.dart';
 import 'package:ecommerce/models/product.dart';
 import 'package:ecommerce/utilites/assets.dart';
 import 'package:ecommerce/views/wigets/List_item_home.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
+
+import '../../controllers/database_controller.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   /// TODO: Temp code till refactor to a separate class with a separate context
   Widget _buildHeaderOfList(
-    BuildContext context, {
-    required String title,
-    required String description,
-    VoidCallback? onTap,
-  }) {
+      BuildContext context, {
+        required String title,
+        required String description,
+        VoidCallback? onTap,
+      }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -75,7 +75,7 @@ class HomePage extends StatelessWidget {
                   )),
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 child: Text(
                   "Street Clothes",
                   style: Theme.of(context).textTheme.headline4!.copyWith(

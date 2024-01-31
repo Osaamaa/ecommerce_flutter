@@ -1,12 +1,17 @@
+import 'package:ecommerce/controllers/database_controller.dart';
+import 'package:ecommerce/models/user_date.dart';
 import 'package:ecommerce/utilites/enums.dart';
 import 'package:flutter/material.dart';
 import '../services/auth.dart';
+import '../utilites/constants.dart';
 
 class AuthController with ChangeNotifier {
   final AuthBase auth;
   String email;
   String password;
   AuthFormType authFormType;
+  // TODO: It's not a best practice thing but it's temporary
+  final database = FireStoreDatabase('123');
 
   AuthController({
     required this.auth,
@@ -14,16 +19,22 @@ class AuthController with ChangeNotifier {
     this.password = '',
     this.authFormType = AuthFormType.login,
   });
-Future<void>submit()async{
-  try{
-  if(authFormType==AuthFormType.login){
-    await auth.loginWithEmailAndPassword(email, password);
-  }else{
-    await auth.signUpWithEmailAndPassword(email, password);
-  }}catch (e){
-    rethrow;
+  Future<void> submit() async {
+    try {
+      if (authFormType == AuthFormType.login) {
+        await auth.loginWithEmailAndPassword(email, password);
+      } else {
+        final user = await auth.signUpWithEmailAndPassword(email, password);
+        await database.setUserData(UserData(
+          uid: user?.uid ?? documentIdFromLocalData(),
+          email: email,
+        ));
+      }
+    } catch (e) {
+      rethrow;
+    }
   }
-}
+
   void toggleFormType() {
     final formType = authFormType == AuthFormType.login
         ? AuthFormType.register

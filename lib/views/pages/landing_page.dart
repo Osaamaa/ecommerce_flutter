@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/auth_controller.dart';
-import '../../services/firestore_services.dart';
+import '../wigets/center_indecator.dart';
 import 'bottom_navbar.dart';
 
 class LandingPage extends StatelessWidget {
@@ -31,13 +31,7 @@ class LandingPage extends StatelessWidget {
                   child: const BottomNavBar()),
             );
           }
-
-          ///TODO: We Will Refactor This
-          return const Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
+          return const CustomCenterIndicator();
         });
   }
 }
