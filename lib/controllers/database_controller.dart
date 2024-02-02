@@ -1,5 +1,6 @@
 import 'package:ecommerce/models/add_to_cart_model.dart';
 import 'package:ecommerce/utilites/api_path.dart';
+import '../models/delivery_metod.dart';
 import '../models/product.dart';
 import '../models/user_date.dart';
 import '../services/firestore_services.dart';
@@ -8,12 +9,13 @@ abstract class Database {
   Stream<List<Product>> salesProductsStream();
 
   Stream<List<Product>> newProductsStream();
+  Stream<List<AddToCartModel>> myProductCart();
+  Stream<List<DeliveryMethod>> deliveryMethodsStream();
 
   Future<void> setUserData(UserData userData);
 
   Future<void> addToCart(AddToCartModel product);
 
-  Stream<List<AddToCartModel>> myProductCart();
 }
 
 class FireStoreDatabase implements Database {
@@ -51,4 +53,14 @@ class FireStoreDatabase implements Database {
   Stream<List<AddToCartModel>> myProductCart() => _service.collectionsStream(
       path: ApiPath.myProductCart(uid),
       builder: (data, documentID) => AddToCartModel.fromMap(data!, documentID));
+
+  @override
+
+  Stream<List<DeliveryMethod>> deliveryMethodsStream() =>
+      _service.collectionsStream(
+          path: ApiPath.deliveryMethod(),
+          builder: (data, documentId) =>
+              DeliveryMethod.fromMap(data!, documentId));
+
+
 }

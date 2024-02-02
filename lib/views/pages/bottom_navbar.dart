@@ -14,16 +14,16 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  final _bottomNavbarController=PersistentTabController();
+  final _bottomNavbarController = PersistentTabController();
+
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        icon: const Icon(CupertinoIcons.shopping_cart),
-        title: ("cart"),
+        icon: const Icon(CupertinoIcons.home),
+        title: ("Home"),
         activeColorPrimary: CupertinoColors.activeBlue,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
-
       PersistentBottomNavBarItem(
         icon: const Icon(CupertinoIcons.bag),
         title: ("Settings"),
@@ -31,8 +31,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
-        icon: const Icon(CupertinoIcons.home),
-        title: ("Home"),
+        icon: const Icon(CupertinoIcons.shopping_cart),
+        title: ("cart"),
         activeColorPrimary: CupertinoColors.activeBlue,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
@@ -41,24 +41,26 @@ class _BottomNavBarState extends State<BottomNavBar> {
         title: ("Settings"),
         activeColorPrimary: CupertinoColors.activeBlue,
         inactiveColorPrimary: CupertinoColors.systemGrey,
-      ), PersistentBottomNavBarItem(
+      ),
+      PersistentBottomNavBarItem(
         icon: const Icon(CupertinoIcons.profile_circled),
         title: ("Home"),
         activeColorPrimary: CupertinoColors.activeBlue,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
-
     ];
   }
+
   List<Widget> _buildScreens() {
     return [
+      const HomePage(),
+      Container(),
       const CartPage(),
       Container(),
-      const HomePage(),
-       Container(),
       const ProfilePage(),
     ];
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

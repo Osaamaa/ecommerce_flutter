@@ -1,0 +1,37 @@
+import 'package:flutter/material.dart';
+
+import '../../../models/delivery_metod.dart';
+
+class DeliveryMethodItem extends StatelessWidget {
+  const DeliveryMethodItem({super.key, required this.deliveryMethod});
+
+  final DeliveryMethod deliveryMethod;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8), color: Colors.white),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.network(
+              deliveryMethod.imgUrl,
+              fit: BoxFit.cover,
+              height: 30,
+            ),
+            const SizedBox(
+              height: 6,
+            ),
+            Text(
+              deliveryMethod.days,
+              style: Theme.of(context).textTheme.bodyLarge,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
