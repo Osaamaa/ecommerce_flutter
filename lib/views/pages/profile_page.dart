@@ -29,7 +29,7 @@ class ProfilePage extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20),
                   child: MainBottom(text: 'Log Out', onTap: (){
                     _logout(model, context);
-                  }),
+                  },hasBorder: true,),
                 )
               ],
             ),

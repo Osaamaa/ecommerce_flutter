@@ -15,7 +15,13 @@ Route<dynamic> onGenerate(RouteSettings settings) {
     case AppRoutes.loginPageRoute:
       return CupertinoPageRoute(builder: (_) => const AuthPage());
     case AppRoutes.bottomNavBarRoute:
-      return CupertinoPageRoute(builder: (_) => const BottomNavBar());
+      final args = settings.arguments as Map<String, dynamic>;
+      final database = args['database'];
+      return CupertinoPageRoute(
+        builder: (_) =>
+            Provider<Database>.value(value: database, child: const BottomNavBar()),
+        settings: settings,
+      );
     case AppRoutes.productDetailsRoute:
       final args = settings.arguments as Map<String, dynamic>;
       final product = args['product'];
