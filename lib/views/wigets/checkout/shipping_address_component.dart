@@ -1,8 +1,9 @@
+import 'package:ecommerce/models/shipping_address.dart';
 import 'package:flutter/material.dart';
 
 class ShippingAddressComponent extends StatelessWidget {
-  const ShippingAddressComponent({super.key});
-
+  const ShippingAddressComponent({super.key, required this.shippingAddress});
+final ShippingAddress shippingAddress;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -15,7 +16,7 @@ class ShippingAddressComponent extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                 Text("Osama Hamdy",style: Theme.of(context).textTheme.titleMedium,),
+                 Text(shippingAddress.fullName,style: Theme.of(context).textTheme.titleMedium,),
                 InkWell(
                     onTap: () {},
                     child: Text(
@@ -28,8 +29,8 @@ class ShippingAddressComponent extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 8,),
-             Text("136h street giza dokki",style: Theme.of(context).textTheme.titleMedium,),
-             Text("136h street comeOn",style: Theme.of(context).textTheme.titleMedium,),
+             Text(shippingAddress.address,style: Theme.of(context).textTheme.titleMedium,),
+             Text(shippingAddress.city,style: Theme.of(context).textTheme.titleMedium,),
           ],
         ),
       ),
